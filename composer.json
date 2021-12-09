@@ -1,0 +1,27 @@
+{
+    "name": "tmogdans/laravel-crypto-shredder",
+    "description": "Easy crypto shredding for your laravel models",
+    "keywords": [
+        "mayflower",
+        "crypto shredding",
+        "laravel-crypto-shredder"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Tmogdans\\LaravelCryptoShredder\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Tobias Mogdans",
+            "email": "tobias.mogdans@mayflower.de",
+            "homepage": "https://mayflower.de",
+            "role": "Developer"
+        }
+    ],
+    "require-dev": {
+        "orchestra/testbench": "^6.0"
+    }
+}
