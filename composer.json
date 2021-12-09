@@ -10,7 +10,8 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Tmogdans\\LaravelCryptoShredder\\": "src/"
+            "Tmogdans\\LaravelCryptoShredder\\": "src/",
+            "Tmogdans\\LaravelCryptoShredder\\Tests\\": "tests/"
         }
     },
     "authors": [
@@ -32,6 +33,7 @@
     },
     "scripts": {
         "check-style": "phpcs --standard=PSR12 src tests",
+        "fix-style": "phpcbf  --standard=PSR12 src tests",
         "phpstan": "phpstan --no-progress",
         "phpunit": "XDEBUG_MODE=coverage phpunit --coverage-text"
     },
