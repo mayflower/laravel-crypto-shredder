@@ -32,5 +32,12 @@
     "scripts": {
         "check-style": "phpcs --standard=PSR12 src tests",
         "phpstan": "phpstan --no-progress"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Tmogdans\\LaravelCryptoShredder\\CryptoShredderServiceProvider"
+            ]
+        }
     }
 }
