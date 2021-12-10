@@ -10,11 +10,13 @@ use Tmogdans\LaravelCryptoShredder\Models\Key;
 
 trait UseCryptoShredding
 {
-    private string $cypher = 'aes-128-cbc';
+    protected ShredderOptions $shredderOptions;
+
+    abstract public static function getShredderOptions(): ShredderOptions;
 
     protected static function bootUseCryptoShredding(): void
     {
-        $key = Encrypter::generateKey('aes-128-cbc');
+        $key = Encrypter::generateKey(self::getShredderOptions()->getCypher());
 
         static::creating(function (Model $model) use ($key) {
             $model->encryptOnCreate($key);
@@ -37,27 +39,27 @@ trait UseCryptoShredding
 
     protected function encryptOnCreate(string $key): void
     {
-        $encrypter = new Encrypter($key, $this->cypher);
+        $encrypter = new Encrypter($key, self::getShredderOptions()->getCypher());
 
-        foreach ($this->crypt as $attribute) {
+        foreach (self::getShredderOptions()->getCryptAttributes() as $attribute) {
             $this->setAttribute($attribute, $encrypter->encrypt($this->$attribute));
         }
     }
 
     protected function encryptOnUpdate(string $key): void
     {
-        $encrypter = new Encrypter($key, $this->cypher);
+        $encrypter = new Encrypter($key, self::getShredderOptions()->getCypher());
 
-        foreach ($this->crypt as $attribute) {
+        foreach (self::getShredderOptions()->getCryptAttributes() as $attribute) {
             $this->setAttribute($attribute, $encrypter->encrypt($this->$attribute));
         }
     }
 
     protected function decryptOnRetrieve(string $key): void
     {
-        $decrypter = new Encrypter($key, $this->cypher);
+        $decrypter = new Encrypter($key, self::getShredderOptions()->getCypher());
 
-        foreach ($this->crypt as $attribute) {
+        foreach (self::getShredderOptions()->getCryptAttributes() as $attribute) {
             $this->setAttribute($attribute, $decrypter->decrypt($this->$attribute));
         }
     }
