@@ -54,6 +54,7 @@ trait UseCryptoShredding
         $encrypter = new Encrypter($key, self::getShredderOptions()->getCypher());
 
         foreach (self::getShredderOptions()->getCryptAttributes() as $attribute) {
+            $this->hasAttribute($attribute);
             $this->setAttribute($attribute, $encrypter->encrypt($this->$attribute));
         }
     }
@@ -63,6 +64,7 @@ trait UseCryptoShredding
         $encrypter = new Encrypter($key, self::getShredderOptions()->getCypher());
 
         foreach (self::getShredderOptions()->getCryptAttributes() as $attribute) {
+            $this->hasAttribute($attribute);
             $this->setAttribute($attribute, $encrypter->encrypt($this->$attribute));
         }
     }
@@ -72,6 +74,7 @@ trait UseCryptoShredding
         $decrypter = new Encrypter($key, self::getShredderOptions()->getCypher());
 
         foreach (self::getShredderOptions()->getCryptAttributes() as $attribute) {
+            $this->hasAttribute($attribute);
             $this->setAttribute($attribute, $decrypter->decrypt($this->$attribute));
         }
     }
@@ -97,5 +100,16 @@ trait UseCryptoShredding
         }
 
         return $key->key;
+    }
+
+    private function hasAttribute(mixed $attribute): void
+    {
+        if (!array_key_exists($attribute, $this->getAttributes())) {
+            throw new \InvalidArgumentException(sprintf(
+                "'%s' is not a valid attribute of %s",
+                $attribute,
+                __CLASS__
+            ));
+        }
     }
 }
