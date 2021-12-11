@@ -10,6 +10,7 @@ use Mayflower\LaravelCryptoShredder\ShredderOptions;
 use Mayflower\LaravelCryptoShredder\Tests\TestCase;
 use Mayflower\LaravelCryptoShredder\Tests\TestClassNotModel;
 use Mayflower\LaravelCryptoShredder\Tests\TestModel;
+use Mayflower\LaravelCryptoShredder\Tests\TestModelInvalidAttribute;
 use ReflectionClass;
 use ReflectionMethod;
 
@@ -29,9 +30,10 @@ class UseCryptoShreddingTest extends TestCase
         $this->encrypter = new Encrypter($this->key, $cypher);
     }
 
-    protected static function getMethod(string $name): ReflectionMethod
+    protected static function getMethod(string $name, $className = null): ReflectionMethod
     {
-        $class = new ReflectionClass(TestModel::class);
+        $className = $className ?? TestModel::class;
+        $class = new ReflectionClass($className);
         $method = $class->getMethod($name);
         $method->setAccessible(true);
         return $method;
@@ -139,5 +141,14 @@ class UseCryptoShreddingTest extends TestCase
     public function testItGetsShredderOptionsObject(): void
     {
         self::assertInstanceOf(ShredderOptions::class, TestModel::getShredderOptions());
+    }
+
+    public function testItThrowsInvalidArgumentExceptionOnInvalidAttributeOption(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $model = new TestModelInvalidAttribute();
+        $method = self::getMethod('encryptOnCreate', TestModelInvalidAttribute::class);
+        $method->invokeArgs($model, [$this->key]);
     }
 }
