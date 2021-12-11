@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tmogdans\LaravelCryptoShredder\Models;
+namespace Mayflower\LaravelCryptoShredder\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
