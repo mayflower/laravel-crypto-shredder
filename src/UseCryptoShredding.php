@@ -14,6 +14,17 @@ trait UseCryptoShredding
 
     abstract public static function getShredderOptions(): ShredderOptions;
 
+    public function __construct()
+    {
+        if (!($this instanceof Model)) {
+            $message = sprintf(
+                "Trait %s only allowed on Laravel Model class!",
+                __CLASS__
+            );
+            throw new \LogicException($message);
+        }
+    }
+
     protected static function bootUseCryptoShredding(): void
     {
         $key = Encrypter::generateKey(self::getShredderOptions()->getCypher());
