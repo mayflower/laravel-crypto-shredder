@@ -23,7 +23,7 @@ final class ShredderOptions
 
     public static function create(): ShredderOptions
     {
-        return new self;
+        return new self();
     }
 
     public function getCypher(): string

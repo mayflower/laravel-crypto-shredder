@@ -30,8 +30,9 @@ class UseCryptoShreddingTest extends TestCase
         $this->encrypter = new Encrypter($this->key, $cypher);
     }
 
-    protected static function getMethod(string $name, $className = null): ReflectionMethod
+    protected static function getMethod(string $name, string|null $className = null): ReflectionMethod
     {
+        /** @var class-string $className */
         $className = $className ?? TestModel::class;
         $class = new ReflectionClass($className);
         $method = $class->getMethod($name);
