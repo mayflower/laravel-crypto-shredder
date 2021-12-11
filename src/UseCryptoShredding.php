@@ -16,6 +16,8 @@ trait UseCryptoShredding
 
     public function __construct()
     {
+        parent::__construct();
+
         if (!($this instanceof Model)) {
             $message = sprintf(
                 "Trait %s only allowed on Laravel Model class!",
