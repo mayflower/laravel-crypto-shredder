@@ -23,6 +23,7 @@ trait UseCryptoShredding
             );
             throw new \LogicException($message);
         }
+        parent::__construct();
     }
 
     protected static function bootUseCryptoShredding(): void
