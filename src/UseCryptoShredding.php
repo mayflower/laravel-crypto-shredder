@@ -6,7 +6,7 @@ namespace Mayflower\LaravelCryptoShredder;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Encryption\Encrypter;
-use Tmogdans\LaravelCryptoShredder\Models\Key;
+use Mayflower\LaravelCryptoShredder\Models\Key;
 
 trait UseCryptoShredding
 {
