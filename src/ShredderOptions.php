@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Mayflower\LaravelCryptoShredder;
 
-class ShredderOptions
+use JetBrains\PhpStorm\Pure;
+
+final class ShredderOptions
 {
     public const CIPHER_AES_128_CBC = 'aes-128-cbc';
 
@@ -16,11 +18,12 @@ class ShredderOptions
 
     private string $cypher = self::CIPHER_AES_128_CBC;
 
+    /** @var array<int, string> $cryptAttributes */
     private array $cryptAttributes = [];
 
-    public static function create(): static
+    public static function create(): ShredderOptions
     {
-        return new static();
+        return new self;
     }
 
     public function getCypher(): string
@@ -35,11 +38,17 @@ class ShredderOptions
         return $this;
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getCryptAttributes(): array
     {
         return $this->cryptAttributes;
     }
 
+    /**
+     * @param array<int, string> $cryptAttributes
+     */
     public function setCryptAttributes(array $cryptAttributes): self
     {
         $this->cryptAttributes = $cryptAttributes;
